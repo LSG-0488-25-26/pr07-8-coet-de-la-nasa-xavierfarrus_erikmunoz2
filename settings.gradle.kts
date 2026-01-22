@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "YuGiOh"
+rootProject.name = "LazyComponentsApp"
 include(":app")
  
