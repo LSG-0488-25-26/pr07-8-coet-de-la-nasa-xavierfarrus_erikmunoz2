@@ -1,8 +1,15 @@
 package com.example.yugioh.api
 
-class Repository {
-    private val api = APIInterface.create()
+import com.example.yugioh.model.CardsResponse
+import retrofit2.Response
 
-    suspend fun getAllCards() = api.getCards()
-    suspend fun getCardById(id: Int) = api.getCardById(id)
+class Repository {
+
+    private val api: APIInterface = APIInterface.create()
+
+    suspend fun getAllCards(): Response<CardsResponse> =
+        api.getCards()
+
+    suspend fun getCardById(id: Int): Response<CardsResponse> =
+        api.getCardById(id)
 }

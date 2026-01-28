@@ -1,5 +1,6 @@
 package com.example.yugioh.api
 
+import com.example.yugioh.model.CardsResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -10,15 +11,14 @@ import retrofit2.http.Query
 
 interface APIInterface {
 
-    // Lista general (puedes filtrar por nombre, type, etc. con params)
+    // Lista de cartas (puedes ajustar num/offset si quieres paginación)
     @GET("cardinfo.php")
     suspend fun getCards(
-        @Query("fname") nameContains: String? = null,
-        @Query("num") num: Int? = null,
-        @Query("offset") offset: Int? = null
+        @Query("num") num: Int? = 50,
+        @Query("offset") offset: Int? = 0
     ): Response<CardsResponse>
 
-    // Detalle por id (opcional, si prefieres pedirlo al servidor)
+    // Opcional: detalle por id
     @GET("cardinfo.php")
     suspend fun getCardById(
         @Query("id") id: Int
