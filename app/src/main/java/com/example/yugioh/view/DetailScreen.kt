@@ -35,9 +35,6 @@ fun DetailScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Button(onClick = { navController.popBackStack() }) {
-            Text("Volver")
-        }
 
         Spacer(Modifier.height(12.dp))
 
@@ -79,5 +76,14 @@ fun DetailScreen(
             text = card.desc.orEmpty(),
             style = MaterialTheme.typography.bodyLarge
         )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(onClick = { navController.popBackStack() }) {
+                Text("Volver")
+            }
+        }
     }
 }
