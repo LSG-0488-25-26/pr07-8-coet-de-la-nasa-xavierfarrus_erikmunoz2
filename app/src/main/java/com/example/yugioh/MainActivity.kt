@@ -69,7 +69,6 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .padding(16.dp)
                         ) {
-                            // Mensaje + botón retry centrados
                             androidx.compose.foundation.layout.Column(
                                 modifier = Modifier.align(Alignment.Center),
                                 horizontalAlignment = Alignment.CenterHorizontally
@@ -89,7 +88,6 @@ class MainActivity : ComponentActivity() {
                     }
 
                     else -> {
-                        // Use a Scaffold with TopBar and BottomBar, and host app navigation inside
                         androidx.compose.material3.Scaffold(
                             topBar = { MyTopAppBar(navController) },
                             bottomBar = { MyBottomBar(scaffoldVm, navController) }

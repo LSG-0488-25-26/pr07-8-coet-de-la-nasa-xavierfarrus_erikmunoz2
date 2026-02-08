@@ -25,7 +25,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
 
     LaunchedEffect(Unit) { vm.loadCards() }
 
-    // Forward searched text to CardsViewModel to filter
     val searchedText by searchVm.searchedText.observeAsState("")
     LaunchedEffect(searchedText) { vm.setQuery(searchedText) }
 

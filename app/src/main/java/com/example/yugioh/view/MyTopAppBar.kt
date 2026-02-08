@@ -1,11 +1,17 @@
 package com.example.yugioh.view
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import com.example.yugioh.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
@@ -23,7 +29,13 @@ fun MyTopAppBar(navController: NavHostController) {
             actionIconContentColor = Color.Black
         ),
         actions = {
-            // No actions: search bar is visible in the main content (HomeScreen)
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .padding(end = 12.dp)
+                    .padding(4.dp)
+            )
         }
     )
 }
