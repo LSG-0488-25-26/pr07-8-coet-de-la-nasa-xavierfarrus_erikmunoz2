@@ -38,7 +38,8 @@ class CardsViewModel : ViewModel() {
             _error.value = null
 
             try {
-                val response = repository.getAllCards()
+                val response = repository.getCardsPage(num = 400, offset = 0)
+
                 if (response.isSuccessful) {
                     _cards.value = response.body()?.data.orEmpty()
                     Log.d("CardsViewModel", "Loaded ${_cards.value?.size ?: 0} cards")
