@@ -1,6 +1,7 @@
 package com.example.yugioh.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,15 @@ class CardsViewModel : ViewModel() {
 
     private val _cards = MutableLiveData<List<YugiohCard>>(emptyList())
     val cards: LiveData<List<YugiohCard>> = _cards
+
+    private val _query = MutableLiveData("")
+    val query: LiveData<String> = _query
+
+    private val _filtered = MediatorLiveData<List<YugiohCard>>().apply {
+        addSource(_cards) { updateFiltered() }
+        addSource(_query) { updateFiltered() }
+    }
+    val filtered: LiveData<List<YugiohCard>> = _filtered
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
@@ -43,5 +53,19 @@ class CardsViewModel : ViewModel() {
 
     fun getCardFromLoadedList(cardId: Int): YugiohCard? {
         return _cards.value?.firstOrNull { it.id == cardId }
+    }
+
+    fun setQuery(q: String) {
+        _query.value = q
+    }
+
+    private fun updateFiltered() {
+        val q = _query.value.orEmpty()
+        val list = _cards.value.orEmpty()
+        _filtered.value = if (q.isBlank()) list else list.filter { card ->
+            val name = card.name ?: ""
+            val desc = card.desc ?: ""
+            name.contains(q, ignoreCase = true) || desc.contains(q, ignoreCase = true)
+        }
     }
 }
