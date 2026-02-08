@@ -214,3 +214,10 @@ Proyecto educativo - DAM2
 **Fecha de entrega**: Febrero 2026  
 **Repositorio**: GitHub Classroom - PR07-8  
 **Documentación técnica**: Ver `ROOM_IMPLEMENTATION.md` para detalles de implementación
+
+## 🎥 Videos
+
+Enlaces relativos als vídeos (format `.mp4`). Si els fitxers encara són `.mkv`, caldrà convertir-los o pujar els `.mp4` corresponents al directori `videos/`.
+
+- Versió mòbil: [videos/movil.mp4](videos/movil.mp4)
+- Versió tablet: [videos/tablet.mp4](videos/tablet.mp4)
