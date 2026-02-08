@@ -69,6 +69,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     implementation("com.github.bumptech.glide:okhttp3-integration:4.16.0")
+    implementation("androidx.compose.material3:material3-window-size-class")
+
 
 
 
