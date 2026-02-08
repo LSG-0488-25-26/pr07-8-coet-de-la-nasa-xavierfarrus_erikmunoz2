@@ -14,14 +14,19 @@ import com.example.yugioh.model.YugiohCard
 @Composable
 fun ListScreen(
     cards: List<YugiohCard>,
-    onOpenDetail: (Int) -> Unit
+    onOpenDetail: (Int) -> Unit,
+    favoriteIds: Set<Int> = emptySet()
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         items(cards) { card ->
-            CardItem(card = card, onItemSelected = onOpenDetail)
+            CardItem(
+                card = card,
+                onItemSelected = onOpenDetail,
+                isFavorite = favoriteIds.contains(card.id)
+            )
         }
     }
 }

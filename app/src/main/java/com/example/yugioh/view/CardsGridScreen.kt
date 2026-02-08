@@ -16,7 +16,8 @@ fun CardsGridScreen(
     cards: List<YugiohCard>,
     columns: Int,
     contentPadding: PaddingValues,
-    onOpenDetail: (Int) -> Unit
+    onOpenDetail: (Int) -> Unit,
+    favoriteIds: Set<Int> = emptySet()
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
@@ -26,7 +27,11 @@ fun CardsGridScreen(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(cards) { card ->
-            CardItem(card = card, onItemSelected = onOpenDetail)
+            CardItem(
+                card = card,
+                onItemSelected = onOpenDetail,
+                isFavorite = favoriteIds.contains(card.id)
+            )
         }
     }
 }

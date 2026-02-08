@@ -24,6 +24,7 @@ fun InventoryScreen(
     inventoryVm: InventoryViewModel,
     paddingValues: PaddingValues,
     windowSizeClass: WindowSizeClass,
+    favoriteIds: Set<Int> = emptySet(),
     onOpenDetail: (Int) -> Unit
 ) {
     val inventory by inventoryVm.inventory.observeAsState(emptyList())
@@ -58,7 +59,11 @@ fun InventoryScreen(
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     items(inventory) { card ->
-                        CardItem(card = card, onItemSelected = onOpenDetail)
+                        CardItem(
+                            card = card,
+                            onItemSelected = onOpenDetail,
+                            isFavorite = favoriteIds.contains(card.id)
+                        )
                     }
                 }
             }
@@ -72,7 +77,11 @@ fun InventoryScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(inventory) { card ->
-                        CardItem(card = card, onItemSelected = onOpenDetail)
+                        CardItem(
+                            card = card,
+                            onItemSelected = onOpenDetail,
+                            isFavorite = favoriteIds.contains(card.id)
+                        )
                     }
                 }
             }
@@ -86,7 +95,11 @@ fun InventoryScreen(
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(inventory) { card ->
-                        CardItem(card = card, onItemSelected = onOpenDetail)
+                        CardItem(
+                            card = card,
+                            onItemSelected = onOpenDetail,
+                            isFavorite = favoriteIds.contains(card.id)
+                        )
                     }
                 }
             }
@@ -94,7 +107,11 @@ fun InventoryScreen(
             else -> {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(inventory) { card ->
-                        CardItem(card = card, onItemSelected = onOpenDetail)
+                        CardItem(
+                            card = card,
+                            onItemSelected = onOpenDetail,
+                            isFavorite = favoriteIds.contains(card.id)
+                        )
                     }
                 }
             }

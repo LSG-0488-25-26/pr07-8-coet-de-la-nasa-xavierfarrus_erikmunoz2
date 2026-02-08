@@ -19,6 +19,7 @@ import com.example.yugioh.view.MyTopAppBar
 import com.example.yugioh.viewmodel.CardsViewModel
 import com.example.yugioh.viewmodel.InventoryViewModel
 import com.example.yugioh.viewmodel.ScaffoldViewModel
+import com.example.yugioh.viewmodel.FavoritesViewModel
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 
@@ -35,6 +36,7 @@ class MainActivity : ComponentActivity() {
                 val cardsVm: CardsViewModel = viewModel()
                 val scaffoldVm: ScaffoldViewModel = viewModel()
                 val inventoryVm: InventoryViewModel = viewModel()
+                val favoritesVm: FavoritesViewModel = viewModel()
 
                 val loading by cardsVm.loading.observeAsState(false)
                 val error by cardsVm.error.observeAsState(null)
@@ -130,6 +132,7 @@ class MainActivity : ComponentActivity() {
                                 paddingValues = paddingValues,
                                 cardsViewModel = cardsVm,
                                 inventoryViewModel = inventoryVm,
+                                favoritesViewModel = favoritesVm,
                                 windowSizeClass = windowSizeClass
                             )
                         }

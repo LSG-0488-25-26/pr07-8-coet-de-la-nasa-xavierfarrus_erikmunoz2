@@ -4,10 +4,14 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -21,7 +25,8 @@ import com.example.yugioh.model.YugiohCard
 @Composable
 fun CardItem(
     card: YugiohCard,
-    onItemSelected: (Int) -> Unit
+    onItemSelected: (Int) -> Unit,
+    isFavorite: Boolean = false
 ) {
     Card(
         border = BorderStroke(1.dp, Color.LightGray),
@@ -31,7 +36,10 @@ fun CardItem(
             .fillMaxWidth()
             .clickable { onItemSelected(card.id) }
     ) {
-        Row(modifier = Modifier.padding(12.dp)) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
             val imageUrl = card.cardImages.firstOrNull()?.imageUrlSmall
                 ?: card.cardImages.firstOrNull()?.imageUrl
@@ -46,7 +54,7 @@ fun CardItem(
                 Spacer(Modifier.width(12.dp))
             }
 
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = card.name,
                     style = MaterialTheme.typography.bodyLarge,
@@ -62,6 +70,16 @@ fun CardItem(
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
+            }
+
+            // Icono de favorito
+            if (isFavorite) {
+                Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "Favorito",
+                    tint = Color.Red,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     }

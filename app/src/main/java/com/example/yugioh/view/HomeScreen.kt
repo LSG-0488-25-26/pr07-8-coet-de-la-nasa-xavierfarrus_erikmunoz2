@@ -25,7 +25,8 @@ fun HomeScreen(
     navController: NavHostController,
     paddingValues: PaddingValues,
     cardsViewModel: CardsViewModel,
-    windowSizeClass: WindowSizeClass
+    windowSizeClass: WindowSizeClass,
+    favoriteIds: Set<Int> = emptySet()
 ) {
     val vm: CardsViewModel = cardsViewModel
     val searchVm: SearchBarViewModel = viewModel()
@@ -52,7 +53,8 @@ fun HomeScreen(
                             navController.navigate(Routes.DetailScreen.createRoute(cardId)) {
                                 launchSingleTop = true
                             }
-                        }
+                        },
+                        favoriteIds = favoriteIds
                     )
                 }
 
@@ -65,7 +67,8 @@ fun HomeScreen(
                             navController.navigate(Routes.DetailScreen.createRoute(cardId)) {
                                 launchSingleTop = true
                             }
-                        }
+                        },
+                        favoriteIds = favoriteIds
                     )
                 }
 
@@ -78,7 +81,8 @@ fun HomeScreen(
                             navController.navigate(Routes.DetailScreen.createRoute(cardId)) {
                                 launchSingleTop = true
                             }
-                        }
+                        },
+                        favoriteIds = favoriteIds
                     )
                 }
 
@@ -87,7 +91,8 @@ fun HomeScreen(
                         cards = filtered,
                         onOpenDetail = { cardId ->
                             navController.navigate(Routes.DetailScreen.createRoute(cardId))
-                        }
+                        },
+                        favoriteIds = favoriteIds
                     )
                 }
             }

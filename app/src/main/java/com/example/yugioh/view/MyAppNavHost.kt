@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.yugioh.navigation.Routes
 import com.example.yugioh.viewmodel.ScaffoldViewModel
 import com.example.yugioh.viewmodel.CardsViewModel
+import com.example.yugioh.viewmodel.FavoritesViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.yugioh.viewmodel.SearchBarViewModel
 import com.example.yugioh.viewmodel.InventoryViewModel
@@ -23,9 +24,11 @@ fun MyAppNavHost(
     paddingValues: PaddingValues,
     cardsViewModel: CardsViewModel,
     inventoryViewModel: InventoryViewModel,
+    favoritesViewModel: FavoritesViewModel,
     windowSizeClass: WindowSizeClass
 ) {
     val cards by cardsViewModel.cards.observeAsState(emptyList())
+    val favoriteIds by favoritesViewModel.favoriteIds.observeAsState(emptySet())
 
     NavHost(
         navController = navController,
@@ -36,12 +39,18 @@ fun MyAppNavHost(
                 navController = navController,
                 paddingValues = paddingValues,
                 cardsViewModel = cardsViewModel,
-                windowSizeClass = windowSizeClass
+                windowSizeClass = windowSizeClass,
+                favoriteIds = favoriteIds
             )
         }
 
         composable("favorite") {
-            FavoriteScreen(paddingValues = paddingValues, windowSizeClass = windowSizeClass)
+            FavoriteScreen(
+                paddingValues = paddingValues,
+                windowSizeClass = windowSizeClass,
+                favoritesViewModel = favoritesViewModel,
+                navController = navController
+            )
         }
 
         composable("search") {
@@ -74,6 +83,7 @@ fun MyAppNavHost(
                 inventoryVm = inventoryViewModel,
                 paddingValues = paddingValues,
                 windowSizeClass = windowSizeClass,
+                favoriteIds = favoriteIds,
                 onOpenDetail = { cardId ->
                     navController.navigate(Routes.DetailScreen.createRoute(cardId)) {
                         launchSingleTop = true
@@ -94,7 +104,8 @@ fun MyAppNavHost(
                 navController = navController,
                 card = cardFromApi ?: cardFromInventory,
                 paddingValues = paddingValues,
-                windowSizeClass = windowSizeClass
+                windowSizeClass = windowSizeClass,
+                favoritesViewModel = favoritesViewModel
             )
         }
     }
