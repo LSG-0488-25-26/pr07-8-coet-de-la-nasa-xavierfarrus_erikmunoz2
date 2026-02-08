@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 interface APIInterface {
@@ -14,7 +15,10 @@ interface APIInterface {
     // Endpoint principal: devuelve todas las cartas.
 
     @GET("cardinfo.php")
-    suspend fun getCards(): Response<CardsResponse>
+    suspend fun getCards(
+        @Query("num") num: Int = 400,
+        @Query("offset") offset: Int = 0
+    ): Response<CardsResponse>
 
     companion object {
 

@@ -7,6 +7,7 @@ class Repository {
 
     private val api: APIInterface = APIInterface.create()
 
-    suspend fun getAllCards() = api.getCards()
+    suspend fun getCardsPage(num: Int = 400, offset: Int = 0) =
+        api.getCards(num = num, offset = offset)
 
 }
