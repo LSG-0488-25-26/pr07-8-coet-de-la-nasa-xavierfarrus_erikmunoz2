@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.yugioh.navigation.Routes
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,14 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreen(paddingValues: PaddingValues) {
-    val vm: CardsViewModel = viewModel()
+fun HomeScreen(navController: NavHostController, paddingValues: PaddingValues, cardsViewModel: CardsViewModel) {
+    val vm: CardsViewModel = cardsViewModel
     val searchVm: SearchBarViewModel = viewModel()
 
     val cards by vm.cards.observeAsState(emptyList())
     val loading by vm.loading.observeAsState(false)
-
-    LaunchedEffect(Unit) { vm.loadCards() }
 
     val searchedText by searchVm.searchedText.observeAsState("")
     LaunchedEffect(searchedText) { vm.setQuery(searchedText) }
@@ -35,7 +36,11 @@ fun HomeScreen(paddingValues: PaddingValues) {
         if (loading) {
             Text("Cargando...")
         } else {
-            ListScreen(cards = filtered, onOpenDetail = { /* navigation handled by NavHost */ })
+            ListScreen(cards = filtered, onOpenDetail = { cardId ->
+                navController.navigate(Routes.DetailScreen.createRoute(cardId)) {
+                    launchSingleTop = true
+                }
+            })
         }
     }
 }

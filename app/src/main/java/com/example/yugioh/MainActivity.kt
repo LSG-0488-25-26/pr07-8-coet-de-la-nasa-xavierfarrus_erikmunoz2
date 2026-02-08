@@ -56,45 +56,67 @@ class MainActivity : ComponentActivity() {
                     vm.loadCards()
                 }
 
-                when {
-                    loading -> {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                        }
+                var timedOut by remember { mutableStateOf(false) }
+
+                if (loading && !timedOut) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
 
-                    error != null -> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp)
+                    LaunchedEffect(Unit) {
+                        kotlinx.coroutines.delay(15000)
+                        if (loading) timedOut = true
+                    }
+                } else if (loading && timedOut) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        androidx.compose.foundation.layout.Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            androidx.compose.foundation.layout.Column(
-                                modifier = Modifier.align(Alignment.Center),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                            Text(
+                                text = "La carga está tardando demasiado.",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Button(
+                                onClick = { vm.loadCards(); timedOut = false },
+                                modifier = Modifier.padding(top = 12.dp)
                             ) {
-                                Text(
-                                    text = "Error: $error",
-                                    style = MaterialTheme.typography.bodyLarge
-                                )
-                                Button(
-                                    onClick = { vm.loadCards() },
-                                    modifier = Modifier.padding(top = 12.dp)
-                                ) {
-                                    Text("Reintentar")
-                                }
+                                Text("Reintentar")
                             }
                         }
                     }
-
-                    else -> {
-                        androidx.compose.material3.Scaffold(
-                            topBar = { MyTopAppBar(navController) },
-                            bottomBar = { MyBottomBar(scaffoldVm, navController) }
-                        ) { paddingValues ->
-                            MyAppNavHost(navController = navController, myViewModel = scaffoldVm, paddingValues = paddingValues)
+                } else if (error != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        androidx.compose.foundation.layout.Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "Error: $error",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Button(
+                                onClick = { vm.loadCards() },
+                                modifier = Modifier.padding(top = 12.dp)
+                            ) {
+                                Text("Reintentar")
+                            }
                         }
-                        
+                    }
+                } else {
+                    androidx.compose.material3.Scaffold(
+                        topBar = { MyTopAppBar(navController) },
+                        bottomBar = { MyBottomBar(scaffoldVm, navController) }
+                    ) { paddingValues ->
+                        MyAppNavHost(navController = navController, myViewModel = scaffoldVm, paddingValues = paddingValues, cardsViewModel = vm)
                     }
                 }
             }

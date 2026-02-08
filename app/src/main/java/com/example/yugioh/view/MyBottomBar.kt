@@ -25,7 +25,13 @@ fun MyBottomBar(myViewModel: ScaffoldViewModel, navigationController: NavHostCon
                 selected = currentRoute == item.route,
                 onClick = {
                     if (currentRoute != item.route) {
-                        navigationController.navigate(item.route)
+                        navigationController.navigate(item.route) {
+                            popUpTo(navigationController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 }
             )

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.yugioh.api.Repository
 import com.example.yugioh.model.YugiohCard
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class CardsViewModel : ViewModel() {
 
@@ -40,11 +41,14 @@ class CardsViewModel : ViewModel() {
                 val response = repository.getAllCards()
                 if (response.isSuccessful) {
                     _cards.value = response.body()?.data.orEmpty()
+                    Log.d("CardsViewModel", "Loaded ${_cards.value?.size ?: 0} cards")
                 } else {
                     _error.value = "HTTP ${response.code()}"
+                    Log.e("CardsViewModel", "HTTP error ${response.code()}")
                 }
             } catch (e: Exception) {
                 _error.value = e.message ?: "Error desconocido"
+                Log.e("CardsViewModel", "Exception loading cards", e)
             } finally {
                 _loading.value = false
             }
