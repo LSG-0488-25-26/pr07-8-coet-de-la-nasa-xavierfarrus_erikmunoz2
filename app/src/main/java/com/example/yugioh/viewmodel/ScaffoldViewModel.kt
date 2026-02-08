@@ -12,7 +12,10 @@ class ScaffoldViewModel : ViewModel() {
     init {
         _bottomNavigationItems.value = listOf(
             BottomNavigationScreens.Home,
-            BottomNavigationScreens.Favorite
+            BottomNavigationScreens.Favorite,
+            BottomNavigationScreens.Open,
+            BottomNavigationScreens.Inventory
+
         )
     }
 }
